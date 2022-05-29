@@ -14,11 +14,6 @@ public class InstantiatePlayer : MonoBehaviour
 
         (Instantiate(PlayerPrefabs[currentShip - 1], shipSpawnPosition.transform.position, shipSpawnPosition.transform.rotation) as GameObject).transform.parent = shipSpawnPosition.transform;
 
-
-
-        //Instantiate(PlayerPrefabs[currentShip - 1], shipSpawnPosition.transform);
-        //transform.SetParent(shipSpawnPosition.transform);
-
     }
 
 }
