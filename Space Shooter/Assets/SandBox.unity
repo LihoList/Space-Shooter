@@ -208,6 +208,84 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &68317378
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1248850065, guid: 33e44b61053fbf345b7ff5690682fe8b, type: 3}
+      propertyPath: pitchSegment
+      value: 
+      objectReference: {fileID: 869492161}
+    - target: {fileID: 2564804555416435850, guid: 33e44b61053fbf345b7ff5690682fe8b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564804555416435850, guid: 33e44b61053fbf345b7ff5690682fe8b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -18.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564804555416435850, guid: 33e44b61053fbf345b7ff5690682fe8b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564804555416435850, guid: 33e44b61053fbf345b7ff5690682fe8b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564804555416435850, guid: 33e44b61053fbf345b7ff5690682fe8b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.65336317
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564804555416435850, guid: 33e44b61053fbf345b7ff5690682fe8b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564804555416435850, guid: 33e44b61053fbf345b7ff5690682fe8b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.75704473
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564804555416435850, guid: 33e44b61053fbf345b7ff5690682fe8b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564804555416435850, guid: 33e44b61053fbf345b7ff5690682fe8b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564804555416435850, guid: 33e44b61053fbf345b7ff5690682fe8b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 98.409
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564804555416435850, guid: 33e44b61053fbf345b7ff5690682fe8b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2941928678849127984, guid: 33e44b61053fbf345b7ff5690682fe8b,
+        type: 3}
+      propertyPath: m_Name
+      value: Turret (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6518704379324825490, guid: 33e44b61053fbf345b7ff5690682fe8b,
+        type: 3}
+      propertyPath: m_Name
+      value: BarrelParent
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 33e44b61053fbf345b7ff5690682fe8b, type: 3}
 --- !u!4 &310148670 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4330142336339110, guid: c2cdecb038d619049a21e4033aa2050e,
@@ -384,6 +462,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+--- !u!4 &869492161 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2560909984935495557, guid: 33e44b61053fbf345b7ff5690682fe8b,
+    type: 3}
+  m_PrefabInstance: {fileID: 68317378}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1117431107 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 757502920520077615, guid: 33e44b61053fbf345b7ff5690682fe8b,
@@ -716,6 +800,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Turret
+      objectReference: {fileID: 0}
+    - target: {fileID: 2941928678849127984, guid: 33e44b61053fbf345b7ff5690682fe8b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7880611022685181408, guid: 33e44b61053fbf345b7ff5690682fe8b,
         type: 3}
