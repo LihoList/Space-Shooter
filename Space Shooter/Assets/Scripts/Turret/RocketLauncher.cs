@@ -4,15 +4,25 @@ using UnityEngine;
 public class RocketLauncher : MonoBehaviour
 {
     [SerializeField] GameObject rocket;
-    [SerializeField] GameObject spawnPosition;
+    AudioSource audioSource_FireSound;
+
+    public int activationDelay = 1;
 
     private void Start()
     {
-        InvokeRepeating("FireRocket", 1f, 1f);
+        audioSource_FireSound = GetComponent<AudioSource>();
+
+        InvokeRepeating("SpawnRocket", activationDelay, 0.8f);
+        Destroy(gameObject, activationDelay + 6);
     }
 
-    void FireRocket()
+    void SpawnRocket()
     {
-        (Instantiate(rocket, spawnPosition.transform.position, spawnPosition.transform.rotation) as GameObject).transform.parent = spawnPosition.transform;
+        Instantiate(rocket, gameObject.transform.position, gameObject.transform.rotation);
+        audioSource_FireSound.Play();
+
+        Debug.Log("rocket fired");
+
     }
+
 }

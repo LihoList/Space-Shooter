@@ -95,7 +95,17 @@ public class PlayerControl : MonoBehaviour
                 Invoke("RestartLevel", LoadLevelDelay);
 
                 break;
-        }
+
+			case "Rocket":
+
+				Debug.Log("Rocket");
+
+				OnPlayerDeath();
+				explosionFX.SetActive(true);
+				Invoke("RestartLevel", LoadLevelDelay);
+
+				break;
+		}
     }
 
 
@@ -128,6 +138,8 @@ public class PlayerControl : MonoBehaviour
 				break;
 
 			
+
+
 
 
 

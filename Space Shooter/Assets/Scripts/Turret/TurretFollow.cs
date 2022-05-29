@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class TurretFollow : MonoBehaviour
@@ -8,6 +7,7 @@ public class TurretFollow : MonoBehaviour
 
     private void Start()
     {
+
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
     }
