@@ -94,22 +94,6 @@ public class PlayerControl : MonoBehaviour
 
 		}
     }
-	void PlayerDeath(string tag)
-    {
-		if(isControlEnabled)
-        {
-			Debug.Log(tag); //print what killed the player
-
-			GameObject fx = Instantiate(deathFX, transform.position, Quaternion.identity); //spawn object with sound and particles
-			Destroy(fx, 1); //destroy it
-			Invoke("RestartLevel", LoadLevelDelay); //restart level
-
-			isControlEnabled = false; //turn off player controll
-			darkScreenAnimator.Play("ShowDark"); //show dark screen
-
-		}
-	}
-
 
 
     private void OnTriggerEnter(Collider other)
@@ -158,6 +142,24 @@ public class PlayerControl : MonoBehaviour
 		moneyAndScoreScript = FindObjectOfType<MoneyAndScore>().GetComponent<MoneyAndScore>();
 		moneyAndScoreScript.AddScoreToMoney(scoreToConvert);
 	}
+
+	void PlayerDeath(string tag)
+	{
+		if (isControlEnabled)
+		{
+			Debug.Log(tag); //print what killed the player
+
+			GameObject fx = Instantiate(deathFX, transform.position, Quaternion.identity); //spawn object with sound and particles
+			Destroy(fx, 1); //destroy it
+			Invoke("RestartLevel", LoadLevelDelay); //restart level
+
+			isControlEnabled = false; //turn off player controll
+			darkScreenAnimator.Play("ShowDark"); //show dark screen
+
+		}
+	}
+
+
 
 	void DefeatOnTrigger()
     {
