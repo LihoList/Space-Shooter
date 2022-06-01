@@ -1,19 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
-	[SerializeField] GameObject deathFX;
-	[SerializeField] Transform parent; 
-	[SerializeField] int scoreToAdd = 5;
-	[SerializeField] int hits = 10;
+	int scoreToAdd = 15;
+	int hits = 4;
 
 	Score scoreBoard;
+
+	[SerializeField] GameObject deathFX;
 
 	void Start () {
 		scoreBoard = FindObjectOfType<Score>();
 		AddNonTriggerCollider ();
+
 	}
 	
 	void AddNonTriggerCollider () {
@@ -23,18 +23,20 @@ public class Enemy : MonoBehaviour {
 
 	void OnParticleCollision(GameObject other)
     {
-		scoreBoard.ScoreHit(scoreToAdd);
 		hits = hits - 1;
 		if(hits <= 0)
 		{
+			Destroy(GetComponent<BoxCollider>());
 			Death();
-		}
+		} 
 	}
 
 	void Death()
 	{
-		GameObject fx = Instantiate(deathFX,transform.position,Quaternion.identity);
-		fx.transform.parent = parent;
+		GameObject fx = Instantiate(deathFX, transform.position, Quaternion.identity); //spawn object with sound and particles
+		Destroy(fx, 1); //destroy it
+
+		scoreBoard.ScoreHit(scoreToAdd);
 		Destroy(gameObject);
 	}
 }

@@ -34,9 +34,13 @@ public class Planet : MonoBehaviour
     //dark screen animator controller
     Animator darkScreenAnimator;
 
+    //Level Enter sound
+    AudioSource levelStartAudioSource;
+
 
     private void Start()
     {
+        levelStartAudioSource = GetComponent<AudioSource>();
         mapButtonsScript = FindObjectOfType<MapButtons>().GetComponent<MapButtons>();
         planetClickAudiosource = GameObject.Find("Planet choose sound").GetComponent<AudioSource>();
 
@@ -83,7 +87,8 @@ public class Planet : MonoBehaviour
                     break;
             }
             canZoom = false;
-            Invoke("LoadLevel", 1);
+            Invoke("LoadLevel", 2);
+            levelStartAudioSource.Play();
         }
     }
 

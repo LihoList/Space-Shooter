@@ -12,7 +12,7 @@ public class PlayerControl : MonoBehaviour
 
 	//collision handler
 	float LoadLevelDelay = 1f;
-	[SerializeField] GameObject explosionFX; // explosive particles
+	[SerializeField] GameObject deathFX; // explosive particles
 	int currentScene;
 
 
@@ -42,14 +42,20 @@ public class PlayerControl : MonoBehaviour
 	//batteries
 	public int batteriesDestroyed;
 
+	//Level Enter sound
+	AudioSource levelStartAudioSource;
+
 	private void Start()
     {
-		batteriesDestroyed = 0;
 
+		//references
+		levelStartAudioSource = GetComponent<AudioSource>();
 		darkScreenAnimator = GameObject.Find("Canvas for dark screen").GetComponent<Animator>();
-		darkScreenAnimator.Play("HideDark");
-
 		currentScene = SceneManager.GetActiveScene().buildIndex;
+
+
+		darkScreenAnimator.Play("HideDark");
+		batteriesDestroyed = 0;
 	}
 
     void Update () 
@@ -68,47 +74,41 @@ public class PlayerControl : MonoBehaviour
         {
             case "Ground": // when player hits a ground
 
-                Debug.Log("Ground");
-
-                OnPlayerDeath();
-                explosionFX.SetActive(true);
-                Invoke("RestartLevel", LoadLevelDelay);
-
-                break;
-
-			case "Obstacle": // when player hits an obstacle
-
-				Debug.Log("Obstacle");
-
-				OnPlayerDeath();
-				explosionFX.SetActive(true);
-				Invoke("RestartLevel", LoadLevelDelay);
-
+				PlayerDeath("Ground");
 				break;
 
 			case "Tree": // when player hits a tree
 
-                Debug.Log("Tree");
-
-                OnPlayerDeath();
-                explosionFX.SetActive(true);
-                Invoke("RestartLevel", LoadLevelDelay);
-
-                break;
-
-			case "Rocket":
-
-				Debug.Log("Rocket");
-
-				OnPlayerDeath();
-				explosionFX.SetActive(true);
-				Invoke("RestartLevel", LoadLevelDelay);
-
+				PlayerDeath("Tree");
 				break;
+
+			case "Rocket": // when player hits a rocket
+
+				PlayerDeath("Rocket");
+				break;
+
+			case "Enemy": // when player hits an enemy
+
+				PlayerDeath("Enemy");
+				break;
+
 		}
     }
+	void PlayerDeath(string tag)
+    {
+		if(isControlEnabled)
+        {
+			Debug.Log(tag); //print what killed the player
 
+			GameObject fx = Instantiate(deathFX, transform.position, Quaternion.identity); //spawn object with sound and particles
+			Destroy(fx, 1); //destroy it
+			Invoke("RestartLevel", LoadLevelDelay); //restart level
 
+			isControlEnabled = false; //turn off player controll
+			darkScreenAnimator.Play("ShowDark"); //show dark screen
+
+		}
+	}
 
 
 
@@ -137,34 +137,32 @@ public class PlayerControl : MonoBehaviour
 				}
 				break;
 
-			
-
-
-
-
-
 			case "FinishTrigger": // when player collides with finish trigger
-
-				darkScreenAnimator.Play("ShowDark");
-				Invoke("LoadMenu", LoadLevelDelay);
-
-
-				scoreScript = FindObjectOfType<Score>().GetComponent<Score>();
-				scoreToConvert = scoreScript.score;
-
-				Debug.Log("score converted localy - " + scoreScript.score);
-
-				moneyAndScoreScript = FindObjectOfType<MoneyAndScore>().GetComponent<MoneyAndScore>();
-				moneyAndScoreScript.AddScoreToMoney(scoreToConvert);
-
+				Finish();
 				break;
 		}
+	}
+
+	void Finish()
+    {
+		darkScreenAnimator.Play("ShowDark");
+		Invoke("LoadMenu", 2);
+		levelStartAudioSource.Play();
+
+
+		scoreScript = FindObjectOfType<Score>().GetComponent<Score>();
+		scoreToConvert = scoreScript.score;
+
+		Debug.Log("score converted localy - " + scoreScript.score);
+
+		moneyAndScoreScript = FindObjectOfType<MoneyAndScore>().GetComponent<MoneyAndScore>();
+		moneyAndScoreScript.AddScoreToMoney(scoreToConvert);
 	}
 
 	void DefeatOnTrigger()
     {
 		Debug.Log("DEFEAT");
-		OnPlayerDeath();
+		isControlEnabled = false;
 
 		darkScreenAnimator.Play("ShowDark");
 		Invoke("RestartLevel", LoadLevelDelay);
@@ -179,11 +177,6 @@ public class PlayerControl : MonoBehaviour
 	{
 		SceneManager.LoadScene(currentScene);
 	}
-
-	void OnPlayerDeath()
-	{
-		isControlEnabled = false;
-	} 
 
 
 
