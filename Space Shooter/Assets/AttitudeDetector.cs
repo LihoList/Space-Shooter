@@ -1,9 +1,17 @@
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AttitudeDetector : MonoBehaviour
 {
     float heightAboveGround = 0.0f;
+
+    Text attitudeText;
+
+    private void Start()
+    {
+        attitudeText = GameObject.Find("Attitude Text").GetComponent<Text>();
+    }
 
     private void Update()
     {
@@ -17,6 +25,13 @@ public class AttitudeDetector : MonoBehaviour
             } 
         }
 
-        Debug.Log("attitude" + heightAboveGround);
+
+
+
+
+
+
+        //attitude text
+        attitudeText.text = "Attitude - " + heightAboveGround.ToString("F0");
     }
 }

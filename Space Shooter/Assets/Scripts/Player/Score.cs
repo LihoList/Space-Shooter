@@ -12,13 +12,14 @@ public class Score : MonoBehaviour {
 		score = 0;
 
 		scoreText = GetComponent<Text>();
-		scoreText.text = score.ToString();
+		scoreText.text = "Score - " + score.ToString();
 	}
 
 	public void ScoreHit(int scorePerHit)
 	{
 		score = score + scorePerHit;
-		scoreText.text = score.ToString();
+		scoreText.text = "Score - " + score.ToString();
 	}
-
 }
+
+
