@@ -30,4 +30,9 @@ public class Rocket : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        Destroy(gameObject);
+    }
 }

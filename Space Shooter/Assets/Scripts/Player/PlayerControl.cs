@@ -1,8 +1,25 @@
 ﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour 
+public class PlayerControl : MonoBehaviour
 {
+	//godmode
+	public bool godMode = false;
+	GameObject godModePanel;
+	[SerializeField] GameObject godModeShield;
+	BoxCollider playerCollider;
+
+	//victory screen
+	GameObject vitoryPanel;
+	[SerializeField] GameObject victorySoundPrefab;
+
+
+	[Header("Check Progress")]
+	int check1 = 46;
+	int check2 = 61;
+	int check3 = 76;
+	int finishCheck = 79;
+
 	//other scripts references
 	Score scoreScript;
 	MoneyAndScore moneyAndScoreScript;
@@ -52,10 +69,19 @@ public class PlayerControl : MonoBehaviour
 		levelStartAudioSource = GetComponent<AudioSource>();
 		darkScreenAnimator = GameObject.Find("Canvas for dark screen").GetComponent<Animator>();
 		currentScene = SceneManager.GetActiveScene().buildIndex;
+        godModePanel = GameObject.Find("GodModePanel");
+		playerCollider = GetComponent<BoxCollider>();
+		vitoryPanel = GameObject.Find("Victory Panel"); vitoryPanel.gameObject.SetActive(false);
+
 
 
 		darkScreenAnimator.Play("HideDark");
 		batteriesDestroyed = 0;
+
+		godModePanel.gameObject.SetActive(false); //turning ui godmode panel
+		godModeShield.gameObject.SetActive(false); //turning godmode shield
+
+		CheckController();
 	}
 
     void Update () 
@@ -65,6 +91,11 @@ public class PlayerControl : MonoBehaviour
 			MoveShip();
 			RotateShip();
 			FireGuns();
+
+			if(Input.GetKeyDown(KeyCode.C))
+            {
+				GodModeOn();
+			}
 		}
 	}
 
@@ -95,37 +126,93 @@ public class PlayerControl : MonoBehaviour
 		}
     }
 
+	void CheckController()
+    {
+		Invoke("Check1", check1);
+		Invoke("Check2", check2);
+		Invoke("Check3", check3);
+		Invoke("ShowVictoryScreen", finishCheck - 1);
+		Invoke("FinishCheck", finishCheck);
+    }
 
-    private void OnTriggerEnter(Collider other)
-	{
-		switch (other.gameObject.tag)
+	//---------------------------------------------
+	void Check1()
+    {
+		if (godMode)
+			return;
+
+		if (batteriesDestroyed < 1)
 		{
-			case "Battery 1 Trigger":
-				if (batteriesDestroyed != 1)
-				{
-					DefeatOnTrigger();
-				}
-				break;
-
-			case "Battery 2 Trigger":
-				if (batteriesDestroyed != 2)
-				{
-					DefeatOnTrigger();
-				}
-				break;
-
-			case "Battery 3 Trigger":
-				if (batteriesDestroyed != 3)
-				{
-					DefeatOnTrigger();
-				}
-				break;
-
-			case "FinishTrigger": // when player collides with finish trigger
-				Finish();
-				break;
+			DefeatOnTrigger();
 		}
 	}
+	void Check2()
+	{
+		if (godMode)
+			return;
+
+		if (batteriesDestroyed < 2)
+		{
+			DefeatOnTrigger();
+		}
+	}
+	void Check3()
+	{
+		if (godMode)
+			return;
+
+		if (batteriesDestroyed < 3)
+		{
+			DefeatOnTrigger();
+		}
+	}
+
+	void ShowVictoryScreen()
+	{
+		Time.timeScale = 0;
+		vitoryPanel.gameObject.SetActive(true);
+
+		Instantiate(victorySoundPrefab, gameObject.transform.position, Quaternion.identity);
+	}
+	void FinishCheck()
+	{
+		Finish();
+	}
+
+	
+
+	//---------------------------------------------
+
+	//private void OnTriggerEnter(Collider other)
+	//{
+	//	switch (other.gameObject.tag)
+	//	{
+	//		case "Battery 1 Trigger":
+	//			if (batteriesDestroyed < 1)
+	//			{
+	//				DefeatOnTrigger();	
+	//			}
+	//			break;
+
+	//		case "Battery 2 Trigger":
+	//			if (batteriesDestroyed < 2)
+	//			{
+	//				DefeatOnTrigger();
+	//			}
+	//			break;
+
+	//		case "Battery 3 Trigger":
+	//			if (batteriesDestroyed < 3)
+	//			{
+	//				DefeatOnTrigger();
+	//			}
+	//			break;
+
+	//		case "FinishTrigger": // when player collides with finish trigger
+	//			Finish();
+	//			break;
+	//	}
+	//}
 
 	void Finish()
     {
@@ -133,14 +220,14 @@ public class PlayerControl : MonoBehaviour
 		Invoke("LoadMenu", 2);
 		levelStartAudioSource.Play();
 
+		moneyAndScoreScript = FindObjectOfType<MoneyAndScore>().GetComponent<MoneyAndScore>(); // reference to money script
+		scoreScript = FindObjectOfType<Score>().GetComponent<Score>(); // reference to score script
 
-		scoreScript = FindObjectOfType<Score>().GetComponent<Score>();
-		scoreToConvert = scoreScript.score;
+		scoreToConvert = scoreScript.score; //getting score earned during level
 
-		Debug.Log("score converted localy - " + scoreScript.score);
+		moneyAndScoreScript.AddScoreToMoney(scoreToConvert); //adding local score to global money
 
-		moneyAndScoreScript = FindObjectOfType<MoneyAndScore>().GetComponent<MoneyAndScore>();
-		moneyAndScoreScript.AddScoreToMoney(scoreToConvert);
+
 	}
 
 	void PlayerDeath(string tag)
@@ -158,7 +245,6 @@ public class PlayerControl : MonoBehaviour
 
 		}
 	}
-
 
 
 	void DefeatOnTrigger()
@@ -181,7 +267,16 @@ public class PlayerControl : MonoBehaviour
 	}
 
 
+	void GodModeOn()
+    {
+		godMode = !godMode;
+		Debug.Log("годмод - " + godMode);
 
+		godModePanel.gameObject.SetActive(godMode); //turning ui godmode panel
+		godModeShield.gameObject.SetActive(godMode); //turning godmode shield
+
+		playerCollider.enabled = !playerCollider.enabled; //turning player collider
+	}
 
 
 

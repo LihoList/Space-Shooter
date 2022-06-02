@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour {
 		Destroy(fx, 1); //destroy it
 
 		scoreBoard.ScoreHit(scoreToAdd);
+
 		Destroy(gameObject);
 	}
 }

@@ -12,6 +12,8 @@ public class MoneyAndScore : MonoBehaviour
     [Header("-----Money-----")]
     public int money;
 
+    int destroyedEnemiesCount;
+
     private void Start()
     {
         LoadMoney();
@@ -28,7 +30,6 @@ public class MoneyAndScore : MonoBehaviour
 
             moneyTextMenuMap.text = "$" + money.ToString();
             moneyTextShop.text = "$" + money.ToString();
-
         }
         
         MoneySave();

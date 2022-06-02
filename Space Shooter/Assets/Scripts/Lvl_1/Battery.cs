@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Battery : MonoBehaviour
 {
-	public int batteryHp = 1;
+	public int batteryHp = 8;
 	[SerializeField] ParticleSystem explosionFX;
 	[SerializeField] ParticleSystem smokeFX;
 	[SerializeField] GameObject innerCylinder;
