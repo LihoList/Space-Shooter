@@ -13,7 +13,7 @@ public class MapMenuRotateShip : MonoBehaviour
         canFreeRotate = true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(canFreeRotate)
         {
